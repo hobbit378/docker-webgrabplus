@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-
-FROM ghcr.io/linuxserver/baseimage-alpine:3.20
+ARG BASEIMG=ghcr.io/linuxserver/baseimage-alpine:3.20
+FROM ${BASEIMG}
 
 # set version label
 ARG BUILD_DATE
@@ -45,12 +45,22 @@ RUN \
     http://www.webgrabplus.com/sites/default/files/download/ini/SiteIniPack_current.zip && \
   unzip -q /tmp/ini.zip -d /defaults/ini/ && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
+  echo "**** link init script ****" && \
+  ln -s /etc/s6-overlay/s6-rc.d/init-webgrabplus-config/run /bin/init-webgrab && \
   echo "**** cleanup ****" && \
   rm -rf \
     /tmp/*
 
 # copy files
 COPY root/ /
+
+# clear ENTRYPOINT of base image in order to prevent s6 upstart;
+# in case the container should be permanently running, (re-)define --entrypoint ["/init"] at the commandline
+ENTRYPOINT []
+
+# change standard command to init container und update EPG and then exit
+# if necessary override the command when creating/running the container with sleep x and than enter conter with docker exec ... /bin/bash
+CMD  "/bin/init-webgrab; /app/update.sh"
 
 # ports and volumes
 VOLUME /config /data
