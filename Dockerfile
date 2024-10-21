@@ -60,7 +60,7 @@ ENTRYPOINT []
 
 # change standard command to init container und update EPG and then exit
 # if necessary override the command when creating/running the container with sleep x and than enter conter with docker exec ... /bin/bash
-CMD  "/bin/init-webgrab; /app/update.sh"
+CMD  /bin/bash -c "source /bin/init-webgrab; source /app/update.sh"
 
 # ports and volumes
 VOLUME /config /data
