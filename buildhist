@@ -1,0 +1,1 @@
+podman build --build-arg VERSION=5.3.0-ls250 --build-arg BUILD_DATE=$(date +%F) --build-arg WEBGRAB_VER=5.3.0 --build-arg BASEIMG=docker.io/hobbit00378/docker-baseimage-alpine:armhf-3.20 -t docker.io/hobbit00378/webgrabplus:armhf-5.3.0-ls250mwe .
