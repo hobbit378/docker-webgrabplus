@@ -1,1 +1,7 @@
-podman build --build-arg VERSION=5.3.0-ls250 --build-arg BUILD_DATE=$(date +%F) --build-arg WEBGRAB_VER=5.3.0 --build-arg BASEIMG=docker.io/hobbit00378/docker-baseimage-alpine:armhf-3.20 -t docker.io/hobbit00378/webgrabplus:armhf-5.3.0-ls250mwe .
+docker login -u hobbit00378
+docker pull tonistiigi/binfmt
+docker run --privileged --rm tonistiigi/binfmt --install arm64,arm
+docker build --platform linux/arm/v7 -f ./submodule/base-image/Dockerfile.armhf --build-arg VERSION=3.20 --build-arg BUILD_DATE=$(date +%F) -t docker.io/hobbit00378/baseimage-alpine:armhf-3.20 -t localhost/baseimage-alpine:armhf-latest ./submodule/base-image/ # build baseimage
+docker build --platform linux/arm/v7 -f ./Dockerfile.armhf --build-arg VERSION=5.3.0-ls250 --build-arg BUILD_DATE=$(date +%F) --build-arg WEBGRAB_VER=5.3.0 --build-arg BASEIMG=localhost/baseimage-alpine:armhf-latest -t docker.io/hobbit00378/webgrabplus:armhf-5.3.0  . # build webgrabplus
+docker push docker.io/hobbit00378/baseimage-alpine:armhf-3.20 
+docker push docker.io/hobbit00378/webgrabplus:armhf-5.3.0 
