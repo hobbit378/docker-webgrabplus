@@ -1,0 +1,3 @@
+[submodule "submodule/base-image"]
+	path = submodule/base-image
+	url = https://github.com/hobbit378/docker-baseimage-alpine.git
