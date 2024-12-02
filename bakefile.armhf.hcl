@@ -43,13 +43,13 @@ target "base" {
 target "webgrabplus" {
   platform = ["linux/arm/v7"]
   contexts = {
-    base = "target:base"
     src = "./"
+    base = "target:base"
   }
   dockerfile = "Dockerfile"
   args = {
     BUILD_DATE = "${BUILD_DATE}"
-    BASEIMG="docker.io/hobbit00378/baseimage-alpine:armhf-${BASE_VER}"
+    BASEIMG="base"
     VERSION = "${APP_VER}"
     WEBGRAB_VER = "5.3.0"
   }
