@@ -1,0 +1,6 @@
+[submodule "submodule/base-image"]
+	path = submodule/base-image
+	url = https://github.com/linuxserver/docker-baseimage-alpine.git
+[submodule "submodule/base-image/"]
+	url = https://github.com/linuxserver/docker-baseimage-alpine.git
+	branch = 3.20
